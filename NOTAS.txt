@@ -1,0 +1,114 @@
+
+1) Con el Anaconda Navigator 2 se creo el entorno "goratools" con python 3.5
+https://docs.anaconda.com/anaconda/navigator/tutorials/create-python35-environment/
+IMPORTANTE SE USA ANACONDA 2 que tiene python 3.5
+
+2) En el entorno "goratools" se instalaron los paquetes numpy, astroquery y pyinstaller 
+con "pip install"
+
+3) Hay que agregar manualmente el archivo CITATION ejecutando:
+pyinstaller --onefile --add-data=C:\Users\Matias\anaconda3\Lib\site-packages\astroquery\CITATION;astroquery TestPyInstaller_1.py
+Donde:
+pyinstaller --add-data=<surce>;<destination> 
+<surce> es el directorio donde se encuentra CITATION y <destination> el destino.
+<surce> se averigua ejecutando el python
+import astroquery
+astroquery.__file__
+Creo que esto también se podría haber solucionado con el spec
+https://stackoverflow.com/questions/63686431/filenotfounderror-errno-2-no-such-file-or-directory-pyinstaller-searching-fo
+
+4) Compilando de la manera antes mencionada se generaba el exe, pero al correrlo salía el error
+KeyError: 'keyring.backends' que se solucionó haciendo un downgrade del paquete
+pip uninstall keyring
+pip install -Iv keyring==18.0.0
+
+Finamente se compila con
+pyinstaller --onefile --add-data=C:\Users\Matias\anaconda3\Lib\site-packages\astroquery\CITATION;astroquery CalculadorMDE_v0.1.py
+
+* Los puntos 1 y 2 solucionó el problema del gran tamaño de ejecutable con nunmpy.
+Ahora tiene un tamaño de 18,4MB.
+
+* Para debug es conveniente no usar la opcion --onefile
+pyinstaller --add-data=C:\Users\Matias\anaconda3\Lib\site-packages\astroquery\CITATION;astroquery TestPyInstaller_1.py
+
+* En el ejecutable no encontraba colorama, se grego en el spec:
+datas=[('C:\\Users\\Matias\\anaconda3\\Lib\\site-packages\\astroquery\\CITATION', 'astroquery'),('C:\\Users\\Matias\\anaconda3\\Lib\\site-packages\\colorama','colorama')],
+
+
+* El ambiente quedó:
+pip list
+Package                   Version
+------------------------- ---------
+altgraph                  0.17
+astropy                   3.2.3
+astroquery                0.4.1
+beautifulsoup4            4.9.3
+certifi                   2018.8.24
+chardet                   3.0.4
+entrypoints               0.3
+future                    0.18.2
+html5lib                  1.1
+idna                      2.10
+importlib-metadata        2.0.0
+keyring                   18.0.0
+numpy                     1.18.5
+pefile                    2019.4.18
+pip                       10.0.1
+pyinstaller               4.0
+pyinstaller-hooks-contrib 2020.9
+pywin32-ctypes            0.2.0
+requests                  2.24.0
+setuptools                40.2.0
+six                       1.15.0
+soupsieve                 2.0.1
+urllib3                   1.25.11
+webencodings              0.5.1
+wheel                     0.35.1
+wincertstore              0.2
+zipp                      1.2.0
+You are using pip version 10.0.1, however version 20.2.4 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+
+Entorno: goratools-plt
+Compilado con: pyinstaller CalculadorMDE_v0.2.spec
+
+Package                   Version
+------------------------- ----------
+altgraph                  0.17
+astropy                   3.2.3
+astroquery                0.4.2.dev0
+beautifulsoup4            4.9.3
+certifi                   2018.8.24
+chardet                   3.0.4
+colorama                  0.4.0
+cycler                    0.10.0
+entrypoints               0.3
+future                    0.18.2
+html5lib                  1.1
+idna                      2.10
+importlib-metadata        2.0.0
+keyring                   18.0.0
+kiwisolver                1.1.0
+matplotlib                3.0.3
+mimeparse                 0.1.3
+numpy                     1.18.5
+pefile                    2019.4.18
+pip                       20.2.4
+pyinstaller               4.0
+pyinstaller-hooks-contrib 2020.9
+pyparsing                 2.4.7
+python-dateutil           2.8.1
+pyvo                      1.1
+pywin32-ctypes            0.2.0
+requests                  2.24.0
+setuptools                40.2.0
+six                       1.15.0
+soupsieve                 2.0.1
+termcolor                 1.1.0
+tk                        0.1.0
+urllib3                   1.25.11
+webencodings              0.5.1
+wheel                     0.35.1
+wincertstore              0.2
+zipp                      1.2.0
+
