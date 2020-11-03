@@ -69,9 +69,16 @@ zipp                      1.2.0
 You are using pip version 10.0.1, however version 20.2.4 is available.
 You should consider upgrading via the 'python -m pip install --upgrade pip' command.
 
+----------------------------------------------------------------------------------------
 Entorno: goratools-plt
 Compilado con: pyinstaller CalculadorMDE_v0.2.spec
 
+CalculadorMDE_v0.2.spec contiene
+datas=[('C:\\Users\\Matias\\Anaconda2\\envs\\goratools-plt\\lib\\site-packages\\astroquery\\CITATION', 'astroquery'),
+       ('C:\\Users\\Matias\\Anaconda2\\envs\\goratools-plt\\lib\\site-packages\\colorama','colorama')],
+
+el entorno goratools-plt
+pip list
 Package                   Version
 ------------------------- ----------
 altgraph                  0.17
