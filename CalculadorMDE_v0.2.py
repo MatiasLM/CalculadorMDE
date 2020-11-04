@@ -10,14 +10,11 @@ import sys
 import numpy as np
 from astroquery.jplhorizons import Horizons
 # https://astroquery.readthedocs.io/en/latest/jplhorizons/jplhorizons.html#
-# from termcolor import cprint
-from astropy.table import Table, vstack
 from colorama import Fore, Style, init, deinit, reinit
 
 import matplotlib.pyplot as plt
 import tkinter as Tk
 from tkinter import simpledialog
-# from tkinter import filedialog
 
 #%% Definición de constantes
 VERSION = '0.2'
@@ -203,22 +200,22 @@ while True:
         break
     if opcFig in ['No', 'no', 'NO', 'N', 'n']:
         figs = False
-        sys.exit()
+        break
 
 # Confirmación de archivos a procesar
 print('\n* Confirmación.')
 
 Ninf = len(inputFileName)
 if Ninf == 1:
-    print('\n  - Se procesará '+ str(Ninf+1) +' informe de' + objectID +'.')
+    print('\n  - Se procesará '+ str(Ninf) +' informe de ' + objectID +'.')
 else:
-    print('\n  - Se procesarán '+ str(Ninf+1) +' informes' + objectID +'.')
+    print('\n  - Se procesarán '+ str(Ninf) +' informes de ' + objectID +'.')
 for i in range(Ninf):
-    print('    (' + str(i)+') ' + inputFileName[i])
+    print('    (' + str(i+1)+') ' + inputFileName[i])
 # print('     - ', end = '')
 # print(*inputFileName, sep='\n     - ')
 if stdMode == '1':
-    print('* Hora de estandarización: igual 00:00:00 UTC.')
+    print('  - Hora de estandarización: igual 00:00:00 UTC.')
 elif stdMode == '2':
     print('  - Hora de estandarización: igual a hora de captura.')
 
@@ -260,8 +257,8 @@ if figs:
     mkr = 100 * ('ov+s*x2pd')
 
 # Minimo y máximo de efemérides
-minJD = 10000000.0;
-maxJD = 0.0;
+minJD = 10000000.0
+maxJD = 0.0
 
 #%% Modo 1: Hora de estandarización igual 00:00:00 UTC.')
 if stdMode == '1':
@@ -292,9 +289,6 @@ if stdMode == '1':
     ephFileName = objectID + '_JPL_Horizons_EfeMag-EstJD.txt'
     strobjectID, stdMagEphem = Magnitude_JPL_Horizons_Query(objectID, list(standarizationDate))
     stdMagEphem.add_index('datetime_jd')                            # Hace indice la columna de JD
-    # print('Efemerides para: ' + strobjectID + '\n')
-    # print(stdMagEphem)
-    # ephTable = vstack([ephTable, stdMagEphem])
     
     stdMagEphem.write(ephOutputFileDir + ephFileName, format='ascii', overwrite=True)
     print(' - Efemérides guardades en: ' + ephFileName, end='\n \n')
@@ -313,13 +307,13 @@ if stdMode == '1':
         if figs:
             plt.figure(1)
             plt.scatter(infJD, infM, label=obsTag, marker=mkr[infCntr-1])   # Agrega puntos
-        
+
         # Refrezca minimo y maximo para figura final
         if min(infJD) < minJD:
             minJD = min(infJD)
         if max(infJD) > maxJD:
             maxJD = max(infJD)
-                
+
         print(' - Calculando de MDE')
         N = len(infJD)                         # Cantidad de medidas en informe
         infStadarizationDate = (np.floor(np.array(infJD)))+0.5
@@ -369,7 +363,6 @@ if stdMode == '2':
 
         print(' - Descarga de efemérides de JPL HORIZONS')
         strobjectID, stdMagEphem = Magnitude_JPL_Horizons_Query(objectID, infJD)
-#        ephTable = vstack([ephTable, stdMagEphem])
 
         stdMagEphem.write(ephOutputFileDir + ephFileName, format='ascii', overwrite=True)
         print(' - Efemérides guardades en: '+ ephFileName)
@@ -391,9 +384,8 @@ if figs:
     print('* Generando figuras')
 
     #Query a JPL Horizons para figuras
-    np.unique(np.floor(np.array(infJD)))+0.5
-    figJD = np.arange(np.floor(minJD)-4.5,np.floor(maxJD)+6.5,1)
-    _, ephTable = Magnitude_JPL_Horizons_Query(objectID, figJD)
+    figJD = np.arange(np.floor(minJD)-4.5,np.floor(maxJD)+6.5, 1)
+    strobjectID, ephTable = Magnitude_JPL_Horizons_Query(objectID, figJD)
     ephTable.write(ephOutputFileDir + objectID + '_EfemeridesFigura.txt', format='ascii', overwrite=True)
 
     # Efemérides para JD minimo -5 y JD maximo +5 días
@@ -403,9 +395,8 @@ if figs:
     plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
     plt.ylabel("$Magnitud [V]$", fontsize=12)
     plt.grid()
-    # plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+    plt.title(strobjectID, fontsize=16, fontweight='bold')
     plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
-
     plt.savefig(outputFileDir + objectID + '_Mag-JD.png', dpi=150, bbox_inches="tight")
 
     plt.figure(2)
@@ -414,7 +405,7 @@ if figs:
     plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
     plt.ylabel("$MDE [V]$", fontsize=12)
     plt.grid()
-#    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+    plt.title(strobjectID, fontsize=16, fontweight='bold')
     plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
     plt.savefig(outputFileDir + objectID + '_MDE-JD.png', dpi=150, bbox_inches="tight")
 
