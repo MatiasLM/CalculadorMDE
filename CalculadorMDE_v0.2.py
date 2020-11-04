@@ -403,7 +403,9 @@ if figs:
     plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
     plt.ylabel("$Magnitud [V]$", fontsize=12)
     plt.grid()
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+    # plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+    plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
+
     plt.savefig(outputFileDir + objectID + '_Mag-JD.png', dpi=150, bbox_inches="tight")
 
     plt.figure(2)
@@ -412,7 +414,8 @@ if figs:
     plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
     plt.ylabel("$MDE [V]$", fontsize=12)
     plt.grid()
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+#    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=3, mode="expand", borderaxespad=0.)
+    plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
     plt.savefig(outputFileDir + objectID + '_MDE-JD.png', dpi=150, bbox_inches="tight")
 
 #%% FIN
