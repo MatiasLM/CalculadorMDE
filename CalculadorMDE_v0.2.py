@@ -151,7 +151,7 @@ while True:
 # Especificación de archivos a convertir
 if   fileMode == '1':           # (1) Convertir un archivo.
     inputFileDir = ''
-    inputFileName = [input('* Ingrese nombre del archivo a convertir:')]
+    inputFileName = [input('* Ingrese el nombre del archivo a convertir:')]
     if not os.path.isfile('./' + inputFileName[0]):
         printError('El archivo '+ inputFileName[0] + ' no existe en el directorio ' +
                    os.getcwd().replace("\\","/"))
@@ -159,7 +159,7 @@ if   fileMode == '1':           # (1) Convertir un archivo.
         sys.exit()
 
 elif fileMode == '2':           # (2) Convertir un conjunto de archivos.
-    inputFileDir = input('* Ingrese nombre de la carpeta que contiene los archivos:')
+    inputFileDir = input('* Ingrese el nombre de la carpeta que contiene los archivos:')
     inputFileDir = inputFileDir +'/'
     extensions = ['.txt', '.TXT']
     try:
@@ -192,13 +192,13 @@ while True:
 if stdMode == '9':          # (9) salir.
     sys.exit()
 
-objectID = input('* Ingrese ID de objeto o deje en blanco para reconocer del nombre de archivo:')
+objectID = input('* Ingrese el ID del objeto o deje en blanco para reconocer del nombre del archivo:')
 if not objectID:
     objectID = inputFileName[0][0:inputFileName[0].find('_')]
 
 # Especificación de generación de figuras
 while True:
-    opcFig = input('* Desea generar figuras? [Si]/(no):')
+    opcFig = input('* ¿Desea generar figuras? [Si]/(no):')
     if opcFig in ['Si', 'si', 'SI', 'S', 's', '']:
         figs = True
         break
@@ -229,7 +229,7 @@ else:
     print('  - Generación de figuras: deshabilitada.')
 
 while True:
-    temp = input('    Desea continuar? [Si]/(No):')
+    temp = input('    ¿Desea continuar? [Si]/(No):')
     if temp in ['Si', 'si', 'SI', 'S', 's', '']:
         break
     if temp in ['No', 'no', 'NO', 'N', 'n']:
