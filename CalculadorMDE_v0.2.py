@@ -138,11 +138,13 @@ print('*************************************************************************
 print('\n')
 print('* Que desea hacer:')
 print('  (1) Convertir un archivo.')
-print('  (2) Convertir un conjunto de archivos.')
+print('  [2] Convertir un conjunto de archivos.')
 print('  (9) Salir.', sep='')
 fileMode = 0
 while True:
     fileMode = input('  Ingrese opción:')
+    if fileMode == '':              # Opción por defecto
+        fileMode = '2'
     if fileMode in ['1', '2', '9']:
         break
 
@@ -152,7 +154,7 @@ if   fileMode == '1':           # (1) Convertir un archivo.
     inputFileName = [input('* Ingrese nombre del archivo a convertir:')]
     if not os.path.isfile('./' + inputFileName[0]):
         printError('El archivo '+ inputFileName[0] + ' no existe en el directorio ' +
-                   os.getcwd())
+                   os.getcwd().replace("\\","/"))
         input("Presione Enter para salir.")
         sys.exit()
 
@@ -163,12 +165,12 @@ elif fileMode == '2':           # (2) Convertir un conjunto de archivos.
     try:
         inputFileName = [f for f in os.listdir(inputFileDir) if os.path.splitext(f)[1] in extensions]
     except:
-        printError('El directorio no existe en '+ os.getcwd())
+        printError('El directorio no existe en '+ os.getcwd().replace("\\","/"))
         input("Presione Enter para salir.")
         sys.exit()
     if len(inputFileName) == 0:
         printError('No existen archivos ".txt" en el directorio ' +
-                   os.getcwd() + '/' + inputFileDir)
+                   os.getcwd().replace("\\","/") + '/' + inputFileDir)
         input("Presione Enter para salir.")
         sys.exit()
 
@@ -178,10 +180,12 @@ else:                           # (9) salir o otro
 # Especificación de modo de fecha
 print('* Ingrese modo de fecha:')
 print('  (1) Hora de estandarización igual 00:00:00 UTC.')
-print('  (2) Hora de estandarización igual a hora de captura.')
+print('  [2] Hora de estandarización igual a hora de captura.')
 print('  (9) Salir.')
 while True:
     stdMode = input('  Ingrese opción:')
+    if stdMode == '':              # Opción por defecto
+        stdMode = '2'
     if stdMode in ['1', '2', '9']:
         break
 
@@ -194,7 +198,7 @@ if not objectID:
 
 # Especificación de generación de figuras
 while True:
-    opcFig = input('* Desea generar figuras? [Si/no]:')
+    opcFig = input('* Desea generar figuras? [Si]/(no):')
     if opcFig in ['Si', 'si', 'SI', 'S', 's', '']:
         figs = True
         break
@@ -225,7 +229,7 @@ else:
     print('  - Generación de figuras: deshabilitada.')
 
 while True:
-    temp = input('    Desea continuar? [Si/No]:')
+    temp = input('    Desea continuar? [Si]/(No):')
     if temp in ['Si', 'si', 'SI', 'S', 's', '']:
         break
     if temp in ['No', 'no', 'NO', 'N', 'n']:
@@ -392,8 +396,8 @@ if figs:
     plt.figure(1)
     plt.plot(ephTable['datetime_jd'], ephTable['V'], '--k', label='Efemérides')
     plt.ylim(reversed(plt.ylim()))                      # flip the y-axis
-    plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
-    plt.ylabel("$Magnitud [V]$", fontsize=12)
+    plt.xlabel("Fecha~Juliana [dia]", fontsize=12)
+    plt.ylabel("Magnitud [V]", fontsize=12)
     plt.grid()
     plt.title(strobjectID, fontsize=16, fontweight='bold')
     plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
@@ -403,7 +407,7 @@ if figs:
     plt.plot(ephTable['datetime_jd'], len(ephTable['datetime_jd']) * [0], '--k', label='Referencia')
     plt.ylim(reversed(plt.ylim()))                      # flip the y-axis
     plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
-    plt.ylabel("$MDE [V]$", fontsize=12)
+    plt.ylabel("$MDE~[V]$", fontsize=12)
     plt.grid()
     plt.title(strobjectID, fontsize=16, fontweight='bold')
     plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
