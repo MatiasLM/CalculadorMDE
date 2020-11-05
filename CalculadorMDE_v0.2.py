@@ -396,7 +396,7 @@ if figs:
     plt.figure(1)
     plt.plot(ephTable['datetime_jd'], ephTable['V'], '--k', label='Efemérides')
     plt.ylim(reversed(plt.ylim()))                      # flip the y-axis
-    plt.xlabel("Fecha~Juliana [dia]", fontsize=12)
+    plt.xlabel("Fecha Juliana [dia]", fontsize=12)
     plt.ylabel("Magnitud [V]", fontsize=12)
     plt.grid()
     plt.title(strobjectID, fontsize=16, fontweight='bold')
@@ -406,8 +406,8 @@ if figs:
     plt.figure(2)
     plt.plot(ephTable['datetime_jd'], len(ephTable['datetime_jd']) * [0], '--k', label='Referencia')
     plt.ylim(reversed(plt.ylim()))                      # flip the y-axis
-    plt.xlabel("$Fecha~Juliana~[dia]$", fontsize=12)
-    plt.ylabel("$MDE~[V]$", fontsize=12)
+    plt.xlabel("Fecha Juliana [dia]", fontsize=12)
+    plt.ylabel("MDE [V]", fontsize=12)
     plt.grid()
     plt.title(strobjectID, fontsize=16, fontweight='bold')
     plt.legend(bbox_to_anchor=(0., -.25, 1., .102), loc='upper left', ncol=3, mode="expand", borderaxespad=0.)
